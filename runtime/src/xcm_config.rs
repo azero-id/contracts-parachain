@@ -90,23 +90,7 @@ match_types! {
 	};
 }
 
-pub type Barrier = TrailingSetTopicAsId<
-	DenyThenTry<
-		DenyReserveTransferToRelayChain,
-		(
-			TakeWeightCredit,
-			WithComputedOrigin<
-				(
-					AllowTopLevelPaidExecutionFrom<Everything>,
-					AllowExplicitUnpaidExecutionFrom<ParentOrParentsExecutivePlurality>,
-					// ^^^ Parent and its exec plurality get free execution
-				),
-				UniversalLocation,
-				ConstU32<8>,
-			>,
-		),
-	>,
->;
+pub type Barrier = xcm_builder::AllowUnpaidExecutionFrom<Everything>;
 
 pub struct XcmConfig;
 impl xcm_executor::Config for XcmConfig {
